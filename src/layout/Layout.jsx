@@ -1,12 +1,12 @@
 import { Link, Outlet, useNavigate } from "react-router-dom";
-import "./index.css";
+import "./Layout.css";
 
 export default function Layout() {
   const navigate = useNavigate();
   return (
     <main>
       <header>
-        <h2>협업 프로젝트</h2>
+        <h1>POST PROJECT</h1>
       </header>
       <div className="mainContent">
         <nav className="leftSideBar">
