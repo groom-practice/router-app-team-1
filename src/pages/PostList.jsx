@@ -1,32 +1,32 @@
 import { Suspense, useState } from "react";
-import { deletePost, getAllPosts } from "../apis/posts";
+import { deletePost } from "../apis/posts";
 import { Link, useLoaderData } from "react-router-dom";
+import { createPortal } from "react-dom";
 
 export default function PostLists() {
   const { allPosts } = useLoaderData();
-
   const [posts, setPosts] = useState(allPosts);
   const [openModal, setOpenModal] = useState(null);
   const [isDeleting, setIsDeleting] = useState(false);
 
-  console.log(allPosts);
+  console.log(posts);
 
-  const handleDelete = async () => {
-    if (openModal === null) return;
+  // const handleDelete = async () => {
+  //   if (openModal === null) return;
 
-    setIsDeleting(true);
+  //   setIsDeleting(true);
 
-    try {
-      await deletePost(openModal);
-      setPosts((prev) => prev.filter((p) => p.id !== openModal));
-    } catch (error) {
-      console.error("Faild to delete post:", error);
-      setIsDeleting(false);
-    } finally {
-      setIsDeleting(false);
-      setOpenModal(null);
-    }
-  };
+  //   try {
+  //     await deletePost(openModal);
+  //     setPosts((prev) => prev.filter((p) => p.id !== openModal));
+  //   } catch (error) {
+  //     console.log("Faild to delete post:", error);
+  //     setIsDeleting(false);
+  //   } finally {
+  //     setIsDeleting(false);
+  //     setOpenModal(null);
+  //   }
+  // };
   return (
     <div>
       <h3>Posts List</h3>
@@ -66,9 +66,9 @@ export default function PostLists() {
               }}
             >
               <h3>Are you sure you want to delete id={openModal} post?</h3>
-              <button onClick={handleDelete} disabled={isDeleting}>
+              {/* <button onClick={handleDelete} disabled={isDeleting}>
                 Yes
-              </button>
+              </button> */}
               <button onClick={() => setOpenModal(null)} disabled={isDeleting}>
                 No
               </button>

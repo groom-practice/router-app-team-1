@@ -1,14 +1,16 @@
 import { createBrowserRouter } from "react-router-dom";
 import Home from "../pages/Home";
-import PostLists from "../pages/PostLists";
 import PostDetail from "../pages/PostDetails";
 import { getAllPosts, getPostById } from "../apis/posts";
 import App from "../App";
+import ErrorPage from "../pages/ErrorPage";
+import PostList from "../pages/PostList";
 
 const router = createBrowserRouter([
   {
     path: "/",
     element: <App />,
+    errorElement: <ErrorPage />,
     children: [
       {
         index: true,
@@ -16,8 +18,8 @@ const router = createBrowserRouter([
       },
       {
         path: "posts",
-        element: <PostLists />,
-        leader: async () => ({ allPosts: await getAllPosts() }),
+        element: <PostList />,
+        loader: async () => ({ allPosts: await getAllPosts() }),
       },
       {
         path: "posts/:id",
