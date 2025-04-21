@@ -1,13 +1,14 @@
 import { useState } from "react";
 import { createPortal } from "react-dom";
 import PortalModalContainer from "../components/PortalModalContainser";
+import "./Home.css";
 
 export default function Home(){
   const [showLoginModal, setShowLoginModal] = useState(false);
   return (
-    <div>
+    <div className="home">
       <h3>Welcome to the Main Page!</h3>
-      <button>로그인</button>
+      <button>Login</button>
 
       
       {showLoginModal &&
