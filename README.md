@@ -10,8 +10,7 @@
 
 components <br>
 ㄴ PostForm.jsx <br>
-ㄴ <br>
-ㄴ <br>
+ㄴ PortalModalContainser <br>
 
 ## 폴더 구조
 
@@ -27,6 +26,12 @@ src/pages <br>
 ㄴ Home <br>
 ㄴ PostLists <br>
 ㄴ PostDetails <br>
+
+layout/ <br>
+ㄴ Layout <br>
+
+routers/ <br>
+ㄴ router <br>
 
 ## 깃 컨벤션
 
