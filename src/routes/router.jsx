@@ -4,11 +4,13 @@ import PostLists from "../pages/PostLists";
 import PostDetail from "../pages/PostDetails";
 import { getAllPosts, getPostById } from "../apis/posts";
 import App from "../App";
+import ErrorPage from "../pages/ErrorPage";
 
 const router = createBrowserRouter([
   {
     path: "/",
     element: <App />,
+    errorElement: <ErrorPage />,
     children: [
       {
         index: true,
