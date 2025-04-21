@@ -1,5 +1,6 @@
 import { createBrowserRouter } from "react-router-dom";
-import PostLists from "../pages/PostLists";
+import Home from "../pages/Home";
+// import PostLists from "../pages/PostLists";
 import { getAllPosts } from "../apis/posts";
 const router = createBrowserRouter([
   {
@@ -7,7 +8,7 @@ const router = createBrowserRouter([
     element: <App />,
     children: [
       {
-        index: true,
+        index: true, element: <Home />
       },
       {
         path: "posts",
