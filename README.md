@@ -8,6 +8,28 @@
 
 ## 컴포넌트 구조
 
+components <br>
+ㄴ PostForm.jsx <br>
+ㄴ <br>
+ㄴ <br>
+
 ## 폴더 구조
 
+src <br>
+ㄴ apis <br>
+ㄴ components <br>
+ㄴ pages <br>
+ㄴ layout <br>
+ㄴ routes <br>
+ㄴ App.jsx <br>
+
+src/pages <br>
+ㄴ Home <br>
+ㄴ PostLists <br>
+ㄴ PostDetails <br>
+
 ## 깃 컨벤션
+
+feat : 새로운 기능 추가 <br>
+fix : 버그 고친 경우 <br>
+design : css, ui 디자인 <br>
