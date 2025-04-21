@@ -1,21 +1,16 @@
-import { Link, Outlet, useNavigate } from "react-router-dom";
+import { Link, Outlet, } from "react-router-dom";
 import "./Layout.css";
+import Header from "./Header";
+import Sidebar from "./Sidebar";
 
 export default function Layout() {
-  const navigate = useNavigate();
   return (
-    <main>
-      <header>
-        <h1>POST PROJECT</h1>
-      </header>
-      <div className="mainContent">
-        <nav className="leftSideBar">
-          <Link to="/">HOME</Link>
-          <Link to={"/posts"}>POSTS</Link>
-          <button onClick={ () => navigate(-1) }>←</button>
-        </nav>
+    <div>
+      <Header />
+      <div className="page">
+        <Sidebar />
         <Outlet />
       </div>
-    </main>
+    </div>
   );
 }
