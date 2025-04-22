@@ -2,7 +2,6 @@ import { Suspense, useState, useEffect } from "react";
 import { Link, useLoaderData } from "react-router-dom";
 import { createPortal } from "react-dom";
 import "./PostList.css";
-import PostListDeleteModal from "../components/PostListDeleteModal";
 
 export default function PostLists() {
   const { allPosts } = useLoaderData();
@@ -30,7 +29,7 @@ export default function PostLists() {
     });
   };
 
-  const displayedPosts = showBookmarks
+  const bookmarkPosts = showBookmarks
     ? posts.filter((post) => bookmarks.includes(post.id))
     : posts;
 
@@ -52,8 +51,17 @@ export default function PostLists() {
   };
   return (
     <div className="container">
-      <h3>Posts List</h3>
-      <Suspense fallback={<p>Loading posts...</p>}>
+      <div style={{ display: "flex", justifyContent: "space-between" }}>
+        <h3>Posts List</h3>
+        <button
+          style={{ backgroundColor: "#fff", marginBottom: "20px" }}
+          onClick={() => setShowBookmarks((prev) => !prev)}
+        >
+          {showBookmarks ? "전체 보기" : "즐겨찾기 보기"}
+        </button>
+      </div>
+
+      {/* <Suspense fallback={<p>Loading posts...</p>}>
         <ul className="postListContainer">
           {posts.map((post) => (
             <li key={post.id}>
@@ -64,20 +72,13 @@ export default function PostLists() {
             </li>
           ))}
         </ul>
-      </Suspense>
+      </Suspense> */}
 
       <Suspense fallback={<p>Loading posts...</p>}>
-        {displayedPosts.length > 0 ? (
-          <ul>
-            {displayedPosts.map((post) => (
-              <li
-                key={post.id}
-                style={{
-                  display: "flex",
-                  alignItems: "center",
-                  marginBottom: "8px",
-                }}
-              >
+        {bookmarkPosts.length > 0 ? (
+          <ul className="postListContainer">
+            {bookmarkPosts.map((post) => (
+              <li key={post.id}>
                 <Link
                   to={`/posts/${post.id}`}
                   style={{ marginRight: "10px", flex: 1 }}
