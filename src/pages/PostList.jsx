@@ -1,6 +1,8 @@
 import { Suspense, useState, useEffect } from "react";
 import { Link, useLoaderData } from "react-router-dom";
 import { createPortal } from "react-dom";
+import "./PostList.css";
+import PostListDeleteModal from "../components/PostListDeleteModal";
 
 export default function PostLists() {
   const { allPosts } = useLoaderData();
@@ -32,27 +34,37 @@ export default function PostLists() {
     ? posts.filter((post) => bookmarks.includes(post.id))
     : posts;
 
+  const handleDelete = async () => {
+    if (openModal === null) return;
+
+    setIsDeleting(true);
+
+    try {
+      await deletePost(openModal);
+      setPosts((prev) => prev.filter((p) => p.id !== openModal));
+    } catch (error) {
+      console.log("Faild to delete post:", error);
+      setIsDeleting(false);
+    } finally {
+      setIsDeleting(false);
+      setOpenModal(null);
+    }
+  };
   return (
-    <div style={{ color: "#fff" }}>
-      <div
-        style={{
-          display: "flex",
-          justifyContent: "space-between",
-          alignItems: "center",
-          marginBottom: "20px",
-        }}
-      >
-        <h3>Posts List</h3>
-        <button
-          onClick={() => setShowBookmarks(!showBookmarks)}
-          style={{
-            padding: "8px 12px",
-            backgroundColor: showBookmarks ? "#FFD43B" : "",
-          }}
-        >
-          {showBookmarks ? "모든 포스트 보기" : "즐겨찾기 보기"}
-        </button>
-      </div>
+    <div className="container">
+      <h3>Posts List</h3>
+      <Suspense fallback={<p>Loading posts...</p>}>
+        <ul className="postListContainer">
+          {posts.map((post) => (
+            <li key={post.id}>
+              <Link to={`/posts/${post.id}`}>
+                {post.id}. {post.title}
+              </Link>
+              <button onClick={() => setOpenModal(post.id)}>Delete</button>
+            </li>
+          ))}
+        </ul>
+      </Suspense>
 
       <Suspense fallback={<p>Loading posts...</p>}>
         {displayedPosts.length > 0 ? (
@@ -95,11 +107,7 @@ export default function PostLists() {
             ))}
           </ul>
         ) : (
-          <p>
-            {showBookmarks
-              ? "즐겨찾기한 포스트가 없습니다."
-              : "포스트가 없습니다."}
-          </p>
+          <p>포스트가 없습니다.</p>
         )}
       </Suspense>
       {openModal &&
@@ -123,11 +131,25 @@ export default function PostLists() {
                 borderRadius: "5px",
               }}
             >
-              <h3>Are you sure you want to delete id={openModal} post?</h3>
-              {/* <button onClick={handleDelete} disabled={isDeleting}>
+              <h3 style={{ paddingBottom: "16px", color: "#242424" }}>
+                Are you sure you want to delete id={openModal} post?
+              </h3>
+              <button
+                style={{
+                  background: "#646cff",
+                  color: "#fff",
+                  marginRight: "10px",
+                }}
+                onClick={handleDelete}
+                disabled={isDeleting}
+              >
                 Yes
-              </button> */}
-              <button onClick={() => setOpenModal(null)} disabled={isDeleting}>
+              </button>
+              <button
+                style={{ color: "#fff", background: "#000" }}
+                onClick={() => setOpenModal(null)}
+                disabled={isDeleting}
+              >
                 No
               </button>
             </div>
