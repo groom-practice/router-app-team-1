@@ -16,6 +16,12 @@ export async function createPost(data) {
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(data),
   });
+
+  if (!res.ok) {
+    const errorData = await res.json();
+    console.log("수정 실패", errorData);
+    throw new Error("수정 실패요");
+  }
   return res.json();
 }
 

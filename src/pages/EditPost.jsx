@@ -14,9 +14,14 @@ const EditPost = () => {
   }, [id]);
 
   const handleUpdate = async (data) => {
-    await updatePost(id, data).then((res) => console.log(res));
-
-    navigate(`/posts/${id}`);
+    try {
+      const result = await updatePost(id, data);
+      console.log("수정 성공", result);
+      navigate(`/posts/${id}`);
+    } catch (error) {
+      console.error(error);
+      alert("수정 실패 다시 수정 부탁드립니다.");
+    }
   };
 
   if (!post) return <div>...Loading</div>;
