@@ -5,12 +5,13 @@
 - 이예도 - 포스트 id별 상세 페이지
 - 양아름 - 포스트 리스트 페이지
 - 정세은 - 메인페이지 & 레이아웃
-- 김호영 - 상세 페이지 수정
+- 김호영 - 포스트 수정 페이지
 
 ## 컴포넌트 구조
 
 components <br>
 ㄴ PostForm.jsx <br>
+ㄴ PostForm.css <br>
 ㄴ PortalModalContainser <br>
 ㄴ Modal<br>
 ㄴ Modal.css<br>

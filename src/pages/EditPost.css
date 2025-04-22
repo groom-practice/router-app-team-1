@@ -1,0 +1,9 @@
+.edit-title {
+  display: flex;
+  flex-direction: column;
+  padding: 10px 10px;
+}
+.edit-title {
+  font-size: 20px;
+  font-weight: bold;
+}
