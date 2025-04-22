@@ -13,7 +13,7 @@
 
 .modalContainer{
   flex-direction: column;
-  background-color: #131313;
+  background-color: #202020;
   padding: 30px 50px;
   border-radius: 5px;
 }
@@ -53,5 +53,27 @@
 }
 
 .buttons button:hover{
+  background-color: #535bf2;
+}
+
+.resultModalInner{
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.confirmBtn{
+  flex: 1;
+  padding: 8px;
+  background-color: #646cff;
+  color: white;
+  font-size: 16px;
+  font-weight: 500;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.confirmBtn:hover{
   background-color: #535bf2;
 }
