@@ -1,0 +1,38 @@
+.detailDiv {
+  width: 75%;
+  margin: 50px auto 0 auto;
+}
+
+.detailTitleDiv {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 50px;
+}
+
+.detailTitle {
+  font-size: 30px;
+  margin-bottom: 20px;
+}
+
+.detailBody {
+  font-size: 20px;
+  margin-bottom: 50px;
+}
+
+.detailText {
+  margin-right: 20px;
+  color: yellow;
+}
+
+.detailText:hover {
+  color: rgb(148, 148, 0);
+}
+
+.bookmarkModal {
+  display: flex;
+  position: absolute;
+  margin: auto;
+  background-color: darkcyan;
+  width: 500px;
+  height: 500px;
+}
