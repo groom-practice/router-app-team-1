@@ -1,13 +1,12 @@
-import { Link, Outlet } from 'react-router-dom';
-import Layout from './layout/Layout';
+import { Link, Outlet } from "react-router-dom";
+import Layout from "./layout/Layout";
 
 function App() {
-
   return (
     <div>
       <Layout />
     </div>
-  )
+  );
 }
 
-export default App
+export default App;

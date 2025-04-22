@@ -1,5 +1,4 @@
-import { Suspense, useState } from "react";
-import { deletePost } from "../apis/posts";
+import { Suspense, useState, useEffect } from "react";
 import { Link, useLoaderData } from "react-router-dom";
 import { createPortal } from "react-dom";
 
@@ -8,41 +7,101 @@ export default function PostLists() {
   const [posts, setPosts] = useState(allPosts);
   const [openModal, setOpenModal] = useState(null);
   const [isDeleting, setIsDeleting] = useState(false);
+  const [bookmarks, setBookmarks] = useState([]);
+  const [showBookmarks, setShowBookmarks] = useState(false);
 
-  console.log(posts);
+  useEffect(() => {
+    const stored = localStorage.getItem("bookmarks");
+    if (stored) {
+      setBookmarks(JSON.parse(stored));
+    }
+  }, []);
 
-  // const handleDelete = async () => {
-  //   if (openModal === null) return;
+  const toggleBookmark = (postId) => {
+    setBookmarks((prev) => {
+      const updated = prev.includes(postId)
+        ? prev.filter((id) => id !== postId)
+        : [...prev, postId];
 
-  //   setIsDeleting(true);
+      localStorage.setItem("bookmarks", JSON.stringify(updated));
+      return updated;
+    });
+  };
 
-  //   try {
-  //     await deletePost(openModal);
-  //     setPosts((prev) => prev.filter((p) => p.id !== openModal));
-  //   } catch (error) {
-  //     console.log("Faild to delete post:", error);
-  //     setIsDeleting(false);
-  //   } finally {
-  //     setIsDeleting(false);
-  //     setOpenModal(null);
-  //   }
-  // };
+  const displayedPosts = showBookmarks
+    ? posts.filter((post) => bookmarks.includes(post.id))
+    : posts;
+
   return (
-    <div>
-      <h3>Posts List</h3>
-      <Suspense fallback={<p>Loading posts...</p>}>
-        <ul>
-          {posts.map((post) => (
-            <li key={post.id}>
-              <Link to={`/posts/${post.id}`}>
-                {post.id}. {post.title}
-              </Link>
-              <button onClick={() => setOpenModal(post.id)}>Delete</button>
-            </li>
-          ))}
-        </ul>
-      </Suspense>
+    <div style={{ color: "#fff" }}>
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "space-between",
+          alignItems: "center",
+          marginBottom: "20px",
+        }}
+      >
+        <h3>Posts List</h3>
+        <button
+          onClick={() => setShowBookmarks(!showBookmarks)}
+          style={{
+            padding: "8px 12px",
+            backgroundColor: showBookmarks ? "#FFD43B" : "",
+          }}
+        >
+          {showBookmarks ? "모든 포스트 보기" : "즐겨찾기 보기"}
+        </button>
+      </div>
 
+      <Suspense fallback={<p>Loading posts...</p>}>
+        {displayedPosts.length > 0 ? (
+          <ul>
+            {displayedPosts.map((post) => (
+              <li
+                key={post.id}
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  marginBottom: "8px",
+                }}
+              >
+                <Link
+                  to={`/posts/${post.id}`}
+                  style={{ marginRight: "10px", flex: 1 }}
+                >
+                  {post.id}. {post.title}
+                </Link>
+
+                <div
+                  onClick={() => toggleBookmark(post.id)}
+                  style={{ cursor: "pointer", marginRight: "10px" }}
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="20"
+                    height="20"
+                    viewBox="0 0 576 512"
+                  >
+                    <path
+                      fill={bookmarks.includes(post.id) ? "#FFD43B" : "#ccc"}
+                      d="M316.9 18C311.6 7 300.4 0 288.1 0s-23.4 7-28.8 18L195 150.3 51.4 171.5c-12 1.8-22 10.2-25.7 21.7s-.7 24.2 7.9 32.7L137.8 329 113.2 474.7c-2 12 3 24.2 12.9 31.3s23 8 33.8 2.3l128.3-68.5 128.3 68.5c10.8 5.7 23.9 4.9 33.8-2.3s14.9-19.3 12.9-31.3L438.5 329 542.7 225.9c8.6-8.5 11.7-21.2 7.9-32.7s-13.7-19.9-25.7-21.7L381.2 150.3 316.9 18z"
+                    />
+                  </svg>
+                </div>
+
+                <button onClick={() => setOpenModal(post.id)}>Delete</button>
+              </li>
+            ))}
+          </ul>
+        ) : (
+          <p>
+            {showBookmarks
+              ? "즐겨찾기한 포스트가 없습니다."
+              : "포스트가 없습니다."}
+          </p>
+        )}
+      </Suspense>
       {openModal &&
         createPortal(
           <div
@@ -52,7 +111,6 @@ export default function PostLists() {
               left: 0,
               right: 0,
               bottom: 0,
-              backgroundColor: "rgba(0,0,0,0.5)",
               display: "flex",
               justifyContent: "center",
               alignItems: "center",
