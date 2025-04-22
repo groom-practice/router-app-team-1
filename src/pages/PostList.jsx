@@ -2,6 +2,8 @@ import { Suspense, useState } from "react";
 import { deletePost } from "../apis/posts";
 import { Link, useLoaderData } from "react-router-dom";
 import { createPortal } from "react-dom";
+import "./PostList.css";
+import PostListDeleteModal from "../components/PostListDeleteModal";
 
 export default function PostLists() {
   const { allPosts } = useLoaderData();
@@ -11,27 +13,27 @@ export default function PostLists() {
 
   console.log(posts);
 
-  // const handleDelete = async () => {
-  //   if (openModal === null) return;
+  const handleDelete = async () => {
+    if (openModal === null) return;
 
-  //   setIsDeleting(true);
+    setIsDeleting(true);
 
-  //   try {
-  //     await deletePost(openModal);
-  //     setPosts((prev) => prev.filter((p) => p.id !== openModal));
-  //   } catch (error) {
-  //     console.log("Faild to delete post:", error);
-  //     setIsDeleting(false);
-  //   } finally {
-  //     setIsDeleting(false);
-  //     setOpenModal(null);
-  //   }
-  // };
+    try {
+      await deletePost(openModal);
+      setPosts((prev) => prev.filter((p) => p.id !== openModal));
+    } catch (error) {
+      console.log("Faild to delete post:", error);
+      setIsDeleting(false);
+    } finally {
+      setIsDeleting(false);
+      setOpenModal(null);
+    }
+  };
   return (
-    <div>
+    <div className="container">
       <h3>Posts List</h3>
       <Suspense fallback={<p>Loading posts...</p>}>
-        <ul>
+        <ul className="postListContainer">
           {posts.map((post) => (
             <li key={post.id}>
               <Link to={`/posts/${post.id}`}>
@@ -65,11 +67,25 @@ export default function PostLists() {
                 borderRadius: "5px",
               }}
             >
-              <h3>Are you sure you want to delete id={openModal} post?</h3>
-              {/* <button onClick={handleDelete} disabled={isDeleting}>
+              <h3 style={{ paddingBottom: "16px", color: "#242424" }}>
+                Are you sure you want to delete id={openModal} post?
+              </h3>
+              <button
+                style={{
+                  background: "#646cff",
+                  color: "#fff",
+                  marginRight: "10px",
+                }}
+                onClick={handleDelete}
+                disabled={isDeleting}
+              >
                 Yes
-              </button> */}
-              <button onClick={() => setOpenModal(null)} disabled={isDeleting}>
+              </button>
+              <button
+                style={{ color: "#fff", background: "#000" }}
+                onClick={() => setOpenModal(null)}
+                disabled={isDeleting}
+              >
                 No
               </button>
             </div>
