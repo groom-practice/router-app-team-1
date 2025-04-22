@@ -21,8 +21,8 @@ const EditPost = () => {
 
   if (!post) return <div>...Loading</div>;
   return (
-    <div>
-      <h2>수정하실 Post 번호 : {id}번</h2>
+    <div className="edit-title">
+      <h2>수정하실 Post ID : {id}번</h2>
       <PostForm onSubmit={handleUpdate} initialValues={post} />
     </div>
   );

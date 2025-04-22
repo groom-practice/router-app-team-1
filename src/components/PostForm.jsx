@@ -1,4 +1,5 @@
 import { useState } from "react";
+import "./PostForm.css";
 
 export default function PostForm({
   onSubmit,
@@ -13,20 +14,24 @@ export default function PostForm({
   };
 
   return (
-    <form onSubmit={handleSubmit}>
+    <form onSubmit={handleSubmit} className="post-form">
       <input
-        placeholder="title"
+        className="post-input"
+        placeholder="제목을 입력하세요"
         value={title}
         onChange={(e) => setTitle(e.target.value)}
       />
-      <br />
+
       <textarea
-        placeholder="body"
+        className="post-textarea"
+        placeholder="내용을 작성하세요"
         value={body}
         onChange={(e) => setBody(e.target.value)}
       />
-      <br />
-      <button type="submit">제출</button>
+
+      <button type="submit" className="post-submit-btn">
+        제출
+      </button>
     </form>
   );
 }
